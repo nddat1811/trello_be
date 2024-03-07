@@ -5,7 +5,7 @@ import { env } from '~/config/environment'
 let trelloDatabaseInstance = null
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const mongoClientInstance = new MongoClient(env.MONGO_URI, {
+const mongoClientInstance = new MongoClient(env.MONGODB_URI, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,

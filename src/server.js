@@ -4,15 +4,19 @@ import express from 'express'
 import { CONNECT_DB, CLOSE_DB } from '~/config/mongodb'
 import exitHook from 'async-exit-hook'
 import { env } from '~/config/environment'
-
-const app = express()
+import { APIs_V1 } from '~/routes/v1'
+import { errorHandlingMiddleware } from './middlewares/errorHandlingMiddleware'
 
 const START_SERVER = () => {
-  app.get('/', (req, res) => {
-    res.end('<h1>Hello World!</h1><hr>')
-  })
+  const app = express()
 
-  app.listen(() => {
+  app.use(express.json())
+  app.use('/v1', APIs_V1)
+
+  //handle error middleware
+  app.use(errorHandlingMiddleware)
+
+  app.listen(env.APP_PORT, env.APP_HOST, () => {
     console.log(`I am running at ${env.APP_HOST}:${env.APP_PORT}/`)
   })
   //clean up after the server stop
@@ -21,7 +25,7 @@ const START_SERVER = () => {
     console.log(`Exit with ${signal}`)
   })
 }
-//IIFE
+//comment IIFE(Immediately Invoked Function Expression)
 ;(async () => {
   try {
     console.log('Connect to database')
