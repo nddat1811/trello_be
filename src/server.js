@@ -3,19 +3,17 @@
 import express from 'express'
 import { CONNECT_DB, CLOSE_DB } from '~/config/mongodb'
 import exitHook from 'async-exit-hook'
+import { env } from '~/config/environment'
 
 const app = express()
 
 const START_SERVER = () => {
-  const hostname = 'localhost'
-  const port = 3000
-
   app.get('/', (req, res) => {
     res.end('<h1>Hello World!</h1><hr>')
   })
 
-  app.listen(port, hostname, () => {
-    console.log(`I am running at ${hostname}:${port}/`)
+  app.listen(() => {
+    console.log(`I am running at ${env.APP_HOST}:${env.APP_PORT}/`)
   })
   //clean up after the server stop
   exitHook(signal => {
