@@ -10,8 +10,7 @@ const createNew = async (req, res, next) => {
 
   try {
     //set abortEarly --> many errors will be logged
-    const t = await correctCondition.validateAsync(req.body, { abortEarly: false })
-    console.log(t)
+    await correctCondition.validateAsync(req.body, { abortEarly: false })
     next()
   } catch (error) {
     const errorMessage = error.message

@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
   res.status(StatusCodes.OK).send('Hello World! board')
 })
 router.get('/v2', (req, res) => {
-  console.log(req.body)
   res.send('test')
 })
 router.post('/', boardValidation.createNew, boardController.createNew)
